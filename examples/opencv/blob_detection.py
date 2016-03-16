@@ -8,14 +8,11 @@ im = cv2.imread("blob2.jpg")
 # Set up the detector with default parameters.
 params = cv2.SimpleBlobDetector_Params()
 
-params.minThreshold = 240
-params.maxThreshold = 255
-
 params.filterByArea = True
-params.minArea = 1500
+params.minArea = 500
 
 detector = cv2.SimpleBlobDetector(params)
- 
+
 # Detect blobs.
 keypoints = detector.detect(im)
  
