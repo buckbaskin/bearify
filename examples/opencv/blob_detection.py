@@ -3,10 +3,18 @@ import cv2
 import numpy as np;
  
 # Read image
-im = cv2.imread("blob1.jpg", cv2.IMREAD_GRAYSCALE)
+im = cv2.imread("blob2.jpg")
  
 # Set up the detector with default parameters.
-detector = cv2.SimpleBlobDetector()
+params = cv2.SimpleBlobDetector_Params()
+
+params.minThreshold = 240
+params.maxThreshold = 255
+
+params.filterByArea = True
+params.minArea = 1500
+
+detector = cv2.SimpleBlobDetector(params)
  
 # Detect blobs.
 keypoints = detector.detect(im)
