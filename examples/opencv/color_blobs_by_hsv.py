@@ -15,19 +15,7 @@ for i in range(0, 179, 20):
     mask_array.append(mask)
     res_array.append(cv2.bitwise_and(img, img, mask=mask))
 
-# for i in range(0,len(mask_array)):
-#     cv2.imshow('mask'+str(i),mask_array[i])
-
-# mask 5 is pretty useful
-
-# im = cv2.bitwise_not(mask_array[5])
-im = cv2.imread('localoze.jpg')
-cv2.imshow('mask 0', im)
-# cv2.imwrite('localoze.jpg', im)
-
-# im = cv2.blur(im, (5,5))
-# cv2.imshow('blur 1', im)
-
+# find blobs in all the images!
 # Set up the detector with default parameters
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
@@ -48,17 +36,17 @@ params.maxCircularity = 1.0
 
 detector = cv2.SimpleBlobDetector(params)
 
-# Detect blobs.
-keypoints = detector.detect(im)
+keypoints_sum = 0
 
-print(len(keypoints))
+for i in range(0,len(mask_array)):
+    # cv2.imshow('mask'+str(i),mask_array[i])
+    im = cv2.bitwise_not(mask_array[i])
+    keypoints = detector.detect(im)
+    keypoints_sum += len(keypoints)
+    cv2.imshow('cut image '+str(i), res_array[i])
+    im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    cv2.imshow('Keypoints '+str(i), im_with_keypoints)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-cv2.imshow('cut image', res_array[5])
-
-# Draw detected blobs as red circles.
-# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
- 
-# Show keypoints
-cv2.imshow("Keypoints", im_with_keypoints)
-cv2.waitKey(0)
+print('keypoints_sum '+str(keypoints_sum))
