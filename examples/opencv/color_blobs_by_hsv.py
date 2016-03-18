@@ -1,3 +1,12 @@
+'''
+TODO:
+separate out gray/silver from colors
+ignore bright whites (in HSV not blobs)
+
+make overlapping color sets (range of 20, step of 10 kind of thing)
+make a wrapping red color set (2 masks, bitwise or)
+'''
+
 import cv2
 import numpy as np
 
@@ -20,7 +29,7 @@ for i in range(0, 179, 20):
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
 params.maxArea = 800*600
-params.minArea = (500+750)/4
+params.minArea = 300
 
 params.maxThreshold = 200
 params.minThreshold = 0
