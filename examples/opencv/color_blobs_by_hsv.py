@@ -23,9 +23,9 @@ for i in range(0, 179, 20):
 
 # im = cv2.bitwise_not(mask_array[5])
 im = cv2.imread('mask_test1.jpg')
-cv2.imshow('mask 0', im)
+# cv2.imshow('mask 0', im)
 
-# im = cv2.blur(im, (5,5))
+im = cv2.blur(im, (5,5))
 # cv2.imshow('blur 1', im)
 
 # Set up the detector with default parameters
@@ -36,6 +36,15 @@ params.minArea = 10
 
 params.maxThreshold = 200
 params.minThreshold = 0
+
+params.filterByConvexity = True
+params.minConvexity = .01
+params.maxConvexity = 1.0
+
+params.filterByCircularity = True
+params.minCircularity = .01
+params.maxCircularity = 1.0
+
 
 detector = cv2.SimpleBlobDetector(params)
 
