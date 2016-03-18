@@ -18,12 +18,11 @@ for i in range(0, 179, 20):
 # for i in range(0,len(mask_array)):
 #     cv2.imshow('mask'+str(i),mask_array[i])
 
-
 # mask 5 is pretty useful
 
 # im = cv2.bitwise_not(mask_array[5])
 im = cv2.imread('localoze.jpg')
-# cv2.imshow('mask 0', im)
+cv2.imshow('mask 0', im)
 # cv2.imwrite('localoze.jpg', im)
 
 # im = cv2.blur(im, (5,5))
@@ -33,7 +32,7 @@ im = cv2.imread('localoze.jpg')
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
 params.maxArea = 800*600
-params.minArea = 100
+params.minArea = (500+750)/4
 
 params.maxThreshold = 200
 params.minThreshold = 0
@@ -53,6 +52,8 @@ detector = cv2.SimpleBlobDetector(params)
 keypoints = detector.detect(im)
 
 print(len(keypoints))
+
+cv2.imshow('cut image', res_array[5])
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
