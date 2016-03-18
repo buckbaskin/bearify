@@ -12,13 +12,15 @@ TODO:
     - blurring the image first creates a number of blobs that seem closer to my
         sense of what areas should be blobs
 - Check the effects of blurring the masks (non-blurred image)
+    - blurring the masks tends to group more points, but in some cases it splits
+        up blobs that would otherwise have been together.
 '''
 
 import cv2
 import numpy as np
 
 img = cv2.imread('panorama2.jpg')
-img = cv2.blur(img, (5,5,))
+# img = cv2.blur(img, (5,5,))
 
 hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -57,7 +59,7 @@ keypoints_sum = 0
 
 for i in range(0,len(mask_array)):
     # cv2.imshow('mask'+str(i),mask_array[i])
-    im = cv2.bitwise_not(mask_array[i])
+    im = cv2.blur(cv2.bitwise_not(mask_array[i]), (5,5,))
     keypoints = detector.detect(im)
     keypoints_sum += len(keypoints)
     cv2.imshow('cut image '+str(i), res_array[i])
