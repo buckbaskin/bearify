@@ -31,8 +31,12 @@ cv2.imshow('mask 0', im)
 # Set up the detector with default parameters
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
-params.maxArea = 9000
+params.maxArea = 800*600
 params.minArea = 10
+
+params.maxThreshold = 200
+params.minThreshold = 0
+
 detector = cv2.SimpleBlobDetector(params)
 
 # Detect blobs.
