@@ -4,8 +4,10 @@ TODO:
 - ignore bright whites (in HSV not blobs)
 
 - make overlapping color sets (range of 20, step of 10 kind of thing)
+    - Need to eliminate overlapping/similar keypoints (see next)
 - combine keypoints for nearby color sets (i.e. a blob is detected twice as two
     closeish colors)
+
 - make a wrapping red color set (2 masks, bitwise or)
 
 - Check the effects of blurring image first (needs tuning)
@@ -29,7 +31,7 @@ hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 mask_array = []
 res_array = []
 
-for i in range(0, 179, 20):
+for i in range(0, 179, 10):
     lower_limit = np.array([i,50,50])
     upper_limit = np.array([i+20,205,205])
     mask = cv2.inRange(hsv_img, lower_limit, upper_limit)
