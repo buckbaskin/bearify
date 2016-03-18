@@ -8,14 +8,14 @@ TODO:
     closeish colors)
 - make a wrapping red color set (2 masks, bitwise or)
 
-- Check the effects of blurring image first
+- Check the effects of blurring image first (needs tuning)
     - blurring the image first creates a number of blobs that seem closer to my
         sense of what areas should be blobs
 - Check the effects of blurring the masks (non-blurred image)
     - blurring the masks tends to group more points, but in some cases it splits
         up blobs that would otherwise have been together.
 - Check the effects of blurring both...
-    - 
+    - blurs too much.
 '''
 
 import cv2
@@ -43,15 +43,15 @@ params.filterByArea = True
 params.maxArea = 800*600
 params.minArea = 300
 
-params.maxThreshold = 200
+params.maxThreshold = 255
 params.minThreshold = 0
 
-params.filterByConvexity = True
-params.minConvexity = .01
+params.filterByConvexity = False
+params.minConvexity = .001
 params.maxConvexity = 1.0
 
-params.filterByCircularity = True
-params.minCircularity = .01
+params.filterByCircularity = False
+params.minCircularity = .001
 params.maxCircularity = 1.0
 
 
@@ -62,7 +62,7 @@ keypoints_sum = 0
 for i in range(0,len(mask_array)):
     # cv2.imshow('mask'+str(i),mask_array[i])
     im = cv2.bitwise_not(mask_array[i])
-    im = cv2.blur(im, (5,5,))
+    # im = cv2.blur(im, (5,5,))
     keypoints = detector.detect(im)
     keypoints_sum += len(keypoints)
     cv2.imshow('cut image '+str(i), res_array[i])
