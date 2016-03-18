@@ -21,19 +21,20 @@ for i in range(0, 179, 20):
 
 # mask 5 is pretty useful
 
-im = cv2.bitwise_not(mask_array[5])
-cv2.imshow('mask 0', mask_array[5])
+# im = cv2.bitwise_not(mask_array[5])
+im = cv2.imread('mask_test1.jpg')
+cv2.imshow('mask 0', im)
 
-im = cv2.blur(im, (5,5))
-cv2.imshow('blur 1', im)
+# im = cv2.blur(im, (5,5))
+# cv2.imshow('blur 1', im)
 
-import sys
-cv2.waitKey(0)
-sys.exit(0)
+# Set up the detector with default parameters
+params = cv2.SimpleBlobDetector_Params()
+params.filterByArea = True
+params.maxArea = 9000
+params.minArea = 10
+detector = cv2.SimpleBlobDetector(params)
 
-# Set up the detector with default parameters.
-detector = cv2.SimpleBlobDetector()
- 
 # Detect blobs.
 keypoints = detector.detect(im)
 
