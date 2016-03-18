@@ -4,9 +4,13 @@ TODO:
 - ignore bright whites (in HSV not blobs)
 
 - make overlapping color sets (range of 20, step of 10 kind of thing)
+- combine keypoints for nearby color sets (i.e. a blob is detected twice as two
+    closeish colors)
 - make a wrapping red color set (2 masks, bitwise or)
 
 - Check the effects of blurring image first
+    - blurring the image first creates a number of blobs that seem closer to my
+        sense of what areas should be blobs
 - Check the effects of blurring the masks (non-blurred image)
 '''
 
@@ -14,6 +18,7 @@ import cv2
 import numpy as np
 
 img = cv2.imread('panorama2.jpg')
+img = cv2.blur(img, (5,5,))
 
 hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
