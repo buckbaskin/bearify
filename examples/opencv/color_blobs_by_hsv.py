@@ -21,10 +21,10 @@ for i in range(0, 179, 20):
 
 # mask 5 is pretty useful
 
-im = cv2.bitwise_not(mask_array[5])
-# im = cv2.imread('mask_test1.jpg')
+# im = cv2.bitwise_not(mask_array[5])
+im = cv2.imread('localoze.jpg')
 # cv2.imshow('mask 0', im)
-cv2.imwrite('localoze.jpg', im)
+# cv2.imwrite('localoze.jpg', im)
 
 # im = cv2.blur(im, (5,5))
 # cv2.imshow('blur 1', im)
@@ -33,7 +33,7 @@ cv2.imwrite('localoze.jpg', im)
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
 params.maxArea = 800*600
-params.minArea = 10
+params.minArea = 100
 
 params.maxThreshold = 200
 params.minThreshold = 0
