@@ -1,10 +1,13 @@
 '''
 TODO:
-separate out gray/silver from colors
-ignore bright whites (in HSV not blobs)
+- separate out gray/silver from colors
+- ignore bright whites (in HSV not blobs)
 
-make overlapping color sets (range of 20, step of 10 kind of thing)
-make a wrapping red color set (2 masks, bitwise or)
+- make overlapping color sets (range of 20, step of 10 kind of thing)
+- make a wrapping red color set (2 masks, bitwise or)
+
+- Check the effects of blurring image first
+- Check the effects of blurring the masks (non-blurred image)
 '''
 
 import cv2
