@@ -1,6 +1,6 @@
 '''
 TODO:
-- separate out gray/silver from colors
+- separate out gray/silver/blacks from colors
 - ignore bright whites (in HSV not blobs)
 
 - make overlapping color sets (range of 20, step of 10 kind of thing)
@@ -14,13 +14,15 @@ TODO:
 - Check the effects of blurring the masks (non-blurred image)
     - blurring the masks tends to group more points, but in some cases it splits
         up blobs that would otherwise have been together.
+- Check the effects of blurring both...
+    - 
 '''
 
 import cv2
 import numpy as np
 
 img = cv2.imread('panorama2.jpg')
-# img = cv2.blur(img, (5,5,))
+img = cv2.blur(img, (5,5,))
 
 hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -59,7 +61,8 @@ keypoints_sum = 0
 
 for i in range(0,len(mask_array)):
     # cv2.imshow('mask'+str(i),mask_array[i])
-    im = cv2.blur(cv2.bitwise_not(mask_array[i]), (5,5,))
+    im = cv2.bitwise_not(mask_array[i])
+    im = cv2.blur(im, (5,5,))
     keypoints = detector.detect(im)
     keypoints_sum += len(keypoints)
     cv2.imshow('cut image '+str(i), res_array[i])
