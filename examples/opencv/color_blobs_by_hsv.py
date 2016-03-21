@@ -46,7 +46,7 @@ def color_dist(blob_msga, blob_msgb):
     h2 = int(npa2[0][0][0])
     return abs(h1 - h2)
 
-img = cv2.imread('panorama2.jpg')
+img = cv2.imread('panorama3.jpg')
 # cv2.imshow('non-blurred', img)
 img = cv2.blur(img, (5,5,))
 # cv2.imshow('blurred', img)
@@ -88,20 +88,21 @@ for i in range(0, 179, 10):
 # Set up the detector with default parameters
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
-params.maxArea = 500000
-params.minArea = 300
+# params.maxArea = 50000000
+params.minArea = 500
 
-params.maxThreshold = 255
-params.minThreshold = 0
+# params.maxThreshold = 255
+# params.minThreshold = 0
 
-params.filterByConvexity = True
+params.filterByConvexity = False
 params.minConvexity = .00001
 params.maxConvexity = 1.0
 
-params.filterByCircularity = True
+params.filterByCircularity = False
 params.minCircularity = .00001
 params.maxCircularity = 1.0
 
+params.filterByColor = False
 
 detector = cv2.SimpleBlobDetector(params)
 
@@ -137,10 +138,10 @@ for i in range(0, len(blobs)):
 
         bearing_distance = abs(bloba.bearing - blobb.bearing)
         color_distance = color_dist(bloba, blobb)
-        print('%f x %f ...' % (color_distance, bearing_distance,))
+        # print('%f x %f ...' % (color_distance, bearing_distance,))
         if bearing_distance < .1:
             if color_distance < 30:
-                print('filtered...')
+                # print('filtered...')
                 match = True
                 break
     if not match:
