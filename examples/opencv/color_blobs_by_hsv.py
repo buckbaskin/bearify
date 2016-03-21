@@ -1,10 +1,5 @@
 '''
 TODO:
-- extract colors, bearing, from my Blob msg data from image/detected blobs
-
-- combine keypoints for nearby color sets (i.e. a blob is detected twice as two
-    closeish colors)
-
 - make a wrapping red color set (2 masks, bitwise or of masks)
 
 Test Results:
