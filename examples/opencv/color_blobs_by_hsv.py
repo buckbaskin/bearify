@@ -1,6 +1,5 @@
 '''
 TODO:
-- make a wrapping red color set (2 masks, bitwise or of masks)
 
 Test Results:
 - separate out gray/silver/blacks from colors, ignore bright whites
@@ -64,6 +63,17 @@ mask = cv2.inRange(hsv_img, lower_limit, upper_limit)
 # mask_array.append(mask)
 # res_array.append(cv2.bitwise_and(img, img, mask=mask))
 
+# create a wrapping red filter (wraps from 170-10)
+lower_limit1 = np.array([170,75,30])
+upper_limit1 = np.array([180,255,205])
+lower_limit2 = np.array([0,75,30])
+upper_limit2 = np.array([10,255,205])
+mask1 = cv2.inRange(hsv_img, lower_limit1, upper_limit1)
+mask2 = cv2.inRange(hsv_img, lower_limit2, upper_limit2)
+mask_final = cv2.bitwise_or(mask1, mask2)
+mask_array.append(mask_final)
+res_array.append(cv2.bitwise_and(img, img, mask=mask_final))
+
 for i in range(0, 179, 10):
     # i-i+20 = hue/color ranges
     # 75-255 = saturation, colors that one can actually see
@@ -84,12 +94,12 @@ params.minArea = 300
 params.maxThreshold = 255
 params.minThreshold = 0
 
-params.filterByConvexity = False
-params.minConvexity = .001
+params.filterByConvexity = True
+params.minConvexity = .00001
 params.maxConvexity = 1.0
 
-params.filterByCircularity = False
-params.minCircularity = .001
+params.filterByCircularity = True
+params.minCircularity = .00001
 params.maxCircularity = 1.0
 
 
@@ -113,7 +123,7 @@ for i in range(0,len(mask_array)):
     cv2.imshow('cut image '+str(i), res_array[i])
     im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     cv2.imshow('Keypoints '+str(i), im_with_keypoints)
-    # cv2.waitKey(0)
+    cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 filter_blobs = []
