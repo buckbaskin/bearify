@@ -47,9 +47,8 @@ def color_dist(blob_msga, blob_msgb):
     return abs(h1 - h2)
 
 img = cv2.imread('panorama3.jpg')
-# cv2.imshow('non-blurred', img)
+cv2.imshow('original image', img)
 img = cv2.blur(img, (5,5,))
-# cv2.imshow('blurred', img)
 
 hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -111,7 +110,9 @@ keypoints_sum = 0
 blobs = []
 
 for i in range(0,len(mask_array)):
-    # cv2.imshow('mask'+str(i),mask_array[i])
+    if not i == 10:
+        continue
+    
     im = cv2.bitwise_not(mask_array[i])
     # im = cv2.blur(im, (5,5,))
     keypoints = detector.detect(im)
@@ -122,8 +123,10 @@ for i in range(0,len(mask_array)):
         # print(blob_to_msg(img, blob).color)
 
     cv2.imshow('cut image '+str(i), res_array[i])
+    cv2.imwrite('./blue_only.jpg', res_array[i])
     im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     cv2.imshow('Keypoints '+str(i), im_with_keypoints)
+    cv2.imwrite('./mask_keypoints.jpg', im_with_keypoints)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
